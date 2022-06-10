@@ -1,3 +1,4 @@
+from audioop import minmax
 import numpy as np
 from numpy import zeros
 
@@ -18,30 +19,34 @@ class Grafo:
 
     def cost(self):
         print(self.matC)
-    def hamilton(self, inicio):
-        disttotal = 0
-        dist = 0
-        nextnode = inicio-1
-        actualnode = inicio-1
-        fin = 0
-        cadena = ""
-        while fin < self.v:
-            for i in range (self.v):
-                if(self.matC[actualnode, i] != 0):
-                    if(dist == 0):
-                        dist = self.matC[actualnode, i]
-                        nextnode = i
-                    else:
-                        if(self.matC[actualnode, i]<dist):
-                            dist = self.matC[actualnode, i]
-                            nextnode = i
-            cadena = cadena + "pasa por grafo: " + str(actualnode + 1)  + " costo: " + str(dist)
-            disttotal = dist + disttotal
-            actualnode = nextnode
-            fin = fin + 1
-            
-        print(disttotal)
-        print(cadena)
+    def  hamilton(self,start):
+        nv=self.v
+        actual=start-1
+        crrc=0
+        cad=""
+        minx=0
+        miny=0
+        for i in range(nv):
+            crrc=0
+            for j in range(nv):
+                if(self.matC[j,actual]!=0):
+                    if(crrc==0):
+                        crrc=self.matC[j,actual]
+                        minx=j
+                        miny=actual
+                    elif(crrc>self.matC[j,actual]):
+                        crrc=self.matC[j,actual]
+                if(j>=4):
+                    cad+="["+str(miny+1)+","+str(minx+1)+"],"
+           
+            if(actual==nv-1):
+                actual=0
+            else:
+                actual=actual+1
+        print(cad)            
+
+
+       
 
 
 
